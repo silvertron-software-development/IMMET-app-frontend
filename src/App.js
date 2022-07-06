@@ -1,8 +1,11 @@
+import Layout from './components/Layout'
+import PricingTool from './pages/PricingTool'
+
 function App() {
   return (
-    <div className='App'>
-      <h1>Hello Immet World</h1>
-    </div>
+    <Layout>
+      <PricingTool />
+    </Layout>
   )
 }
 
