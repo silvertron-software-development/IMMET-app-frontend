@@ -1,10 +1,10 @@
 import Layout from './components/Layout'
-import PricingTool from './pages/PricingTool'
+import ParicingPage from './pages/PricingPage'
 
 function App() {
   return (
     <Layout>
-      <PricingTool />
+      <ParicingPage />
     </Layout>
   )
 }

@@ -84,7 +84,7 @@ const NavContainer = styled.nav`
       text-transform: capitalize;
       letter-spacing: var(--spacing);
       padding: 0.5rem;
-      transition: all 0.2s linear;
+      transition: all 0.1s ease-in;
       cursor: pointer;
       &:hover {
         border-bottom: 2px solid beige;
