@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react'
 import styled from 'styled-components'
+import 'bulma/css/bulma.css'
 
 const PricingForm = ({ step }) => {
   const [firstStep, setFirstStep] = useState(true)
@@ -119,54 +120,68 @@ const PricingForm = ({ step }) => {
   }, [utPedido])
 
   return (
-    <Wrapper>
+    <Wrapper className='section content'>
       <form className={`pricing-form ${firstStep && 'step-one'}`}>
         {firstStep ? (
           <>
-            <label className='input-label' htmlFor='numeroTintas'>
-              Número de Tintas
-            </label>
-            <select
-              className='form-select'
-              value={values.numeroTintas}
-              name='numeroTintas'
-              id='numeroTintas'
-              onChange={handleChange}
-            >
-              <option value={1.1}>1</option>
-              <option value={1.15}>2</option>
-              <option value={1.19}>3</option>
-              <option value={1.24}>4</option>
-              <option value={1.29}>5</option>
-            </select>
-            <label className='input-label' htmlFor='etiquetaNueva'>
-              Etiqueta Nueva o Reimpresión{' '}
-            </label>
-            <select
-              className='form-select'
-              value={values.etiquetaNueva}
-              name='etiquetaNueva'
-              id='etiquetaNueva'
-              onChange={handleChange}
-            >
-              <option value={false}>Reimpresión</option>
-              <option value={true}>Nueva</option>
-            </select>
-            <label className='input-label' htmlFor='material'>
-              Material
-            </label>
-            <select
-              className='form-select'
-              value={values.material}
-              name='material'
-              id='material'
-              onChange={handleChange}
-            >
-              <option value={'thermal_transfer'}>Thermal Transfer</option>
-              <option value={'couche_satin'}>Couche Satin</option>
-              <option value={'p_blanca'}>Película Blanca</option>
-              <option value={'t_p'}>Transparante y plata</option>
-            </select>
+            <div class="field">
+              <label class="label has-text-white" htmlFor='numeroTintas'>Número de Tintas</label>
+                <div class="control">
+                <div class="select">
+                  <select
+                    className=''
+                    value={values.numeroTintas}
+                    name='numeroTintas'
+                    id='numeroTintas'
+                    onChange={handleChange}
+                  >
+                    <option value={1.1}>1</option>
+                    <option value={1.15}>2</option>
+                    <option value={1.19}>3</option>
+                    <option value={1.24}>4</option>
+                    <option value={1.29}>5</option>
+                  </select>
+                </div>
+                </div>
+            </div>
+
+            <div class="field">
+              <label class="label has-text-white" htmlFor='etiquetaNueva'>Etiqueta Nueva o Reimpresión</label>
+                <div class="control">
+                <div class="select">
+                  <select
+                    className=''
+                    value={values.etiquetaNueva}
+                    name='etiquetaNueva'
+                    id='etiquetaNueva'
+                    onChange={handleChange}
+                  >
+                    <option value={false}>Reimpresión</option>
+                    <option value={true}>Nueva</option>
+                  </select>
+                </div>
+                </div>
+            </div>
+
+            <div class="field">
+              <label class="label has-text-white" htmlFor='material'>Material</label>
+                <div class="control">
+                <div class="select">
+                  <select
+                    className=''
+                    value={values.material}
+                    name='material'
+                    id='material'
+                    onChange={handleChange}
+                  >
+                    <option value={'thermal_transfer'}>Thermal Transfer</option>
+                    <option value={'couche_satin'}>Couche Satin</option>
+                    <option value={'p_blanca'}>Película Blanca</option>
+                    <option value={'t_p'}>Transparante y plata</option>
+                  </select>
+                </div>
+                </div>
+            </div>
           </>
         ) : (
           <>
@@ -232,21 +247,10 @@ const PricingForm = ({ step }) => {
             />
           </>
         )}
-
-        <button
-          type='button'
-          className='btn submit-btn'
-          onClick={() => setFirstStep(!firstStep)}
-        >
-          {firstStep ? 'Ir a Medidas' : 'Ir a especifiaciones'}
-        </button>
-        <button
-          className='btn toggle-btn'
-          type='button'
-          onClick={() => console.log(values)}
-        >
-          Generar Cotización
-        </button>
+        <div class="buttons">
+          <button class="button is-info" type='button' onClick={() => setFirstStep(!firstStep)}>{firstStep ? 'Ir a Medidas' : 'Ir a especifiaciones'}</button>
+          <button class="button is-success" type='button' onClick={() => console.log(values)}>Generar Cotización</button>
+        </div>
       </form>
       {!firstStep && (
         <div className='computed-value-div'>

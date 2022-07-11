@@ -1,24 +1,41 @@
 import React from 'react'
 import styled from 'styled-components'
 import { FaBars } from 'react-icons/fa'
+import 'bulma/css/bulma.css'
 
 const Layout = ({ children }) => {
   return (
     <>
-      <NavContainer>
+      {/* <NavContainer>
         <div className='nav-center'>
           <div className='nav-header'>
-            <h1>Immet App</h1>
+            <h1>Immet App</h1> */}
             {/* <Link to='/'><img src={logo} alt='Bike terrain' /></Link> */}
-            <button type='button' className='nav-toggle'>
+            {/* <button type='button' className='nav-toggle'>
               <FaBars />
             </button>
           </div>
           <ul className='nav-links'>
             <li className='nav-item'>Nueva Cotización</li>
           </ul>
+        </div> */}
+      {/* </NavContainer> */}
+      {/* <main>{children}</main> */}
+
+      <nav class="navbar">
+        <div class="navbar-brand">
+          <h1 class="navbar-item">
+            Immet App
+          </h1>
         </div>
-      </NavContainer>
+        <div class="navbar-menu">
+          <div class="navbar-end">
+            <div class="navbar-item">
+              Nueva cotización
+            </div>
+          </div>
+        </div>
+      </nav>
       <main>{children}</main>
     </>
   )
