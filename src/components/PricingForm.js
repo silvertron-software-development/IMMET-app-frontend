@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react'
 import styled from 'styled-components'
+import 'bulma/css/bulma.css'
 
 const PricingForm = ({ step }) => {
   const [firstStep, setFirstStep] = useState(true)
@@ -119,142 +120,115 @@ const PricingForm = ({ step }) => {
   }, [utPedido])
 
   return (
-    <Wrapper>
+    <Wrapper className='section is-medium content'>
       <form className={`pricing-form ${firstStep && 'step-one'}`}>
         {firstStep ? (
           <>
-            <label className='input-label' htmlFor='numeroTintas'>
-              Número de Tintas
-            </label>
-            <select
-              className='form-select'
-              value={values.numeroTintas}
-              name='numeroTintas'
-              id='numeroTintas'
-              onChange={handleChange}
-            >
-              <option value={1.1}>1</option>
-              <option value={1.15}>2</option>
-              <option value={1.19}>3</option>
-              <option value={1.24}>4</option>
-              <option value={1.29}>5</option>
-            </select>
-            <label className='input-label' htmlFor='etiquetaNueva'>
-              Etiqueta Nueva o Reimpresión{' '}
-            </label>
-            <select
-              className='form-select'
-              value={values.etiquetaNueva}
-              name='etiquetaNueva'
-              id='etiquetaNueva'
-              onChange={handleChange}
-            >
-              <option value={false}>Reimpresión</option>
-              <option value={true}>Nueva</option>
-            </select>
-            <label className='input-label' htmlFor='material'>
-              Material
-            </label>
-            <select
-              className='form-select'
-              value={values.material}
-              name='material'
-              id='material'
-              onChange={handleChange}
-            >
-              <option value={'thermal_transfer'}>Thermal Transfer</option>
-              <option value={'couche_satin'}>Couche Satin</option>
-              <option value={'p_blanca'}>Película Blanca</option>
-              <option value={'t_p'}>Transparante y plata</option>
-            </select>
+            {/* <div class="field"> */}
+              <label class="label" htmlFor='numeroTintas'>Número de Tintas</label>
+                <div class="control">
+                <div class="select">
+                  <select
+                    className=''
+                    value={values.numeroTintas}
+                    name='numeroTintas'
+                    id='numeroTintas'
+                    onChange={handleChange}
+                  >
+                    <option value={1.1}>1</option>
+                    <option value={1.15}>2</option>
+                    <option value={1.19}>3</option>
+                    <option value={1.24}>4</option>
+                    <option value={1.29}>5</option>
+                  </select>
+                </div>
+                </div>
+            {/* </div> */}
+
+            {/* <div class="field"> */}
+              <label class="label" htmlFor='etiquetaNueva'>Etiqueta Nueva o Reimpresión</label>
+                <div class="control">
+                <div class="select">
+                  <select
+                    className=''
+                    value={values.etiquetaNueva}
+                    name='etiquetaNueva'
+                    id='etiquetaNueva'
+                    onChange={handleChange}
+                  >
+                    <option value={false}>Reimpresión</option>
+                    <option value={true}>Nueva</option>
+                  </select>
+                </div>
+                </div>
+            {/* </div> */}
+
+            {/* <div class="field"> */}
+              <label class="label" htmlFor='material'>Material</label>
+                <div class="control">
+                <div class="select">
+                  <select
+                    className=''
+                    value={values.material}
+                    name='material'
+                    id='material'
+                    onChange={handleChange}
+                  >
+                    <option value={'thermal_transfer'}>Thermal Transfer</option>
+                    <option value={'couche_satin'}>Couche Satin</option>
+                    <option value={'p_blanca'}>Película Blanca</option>
+                    <option value={'t_p'}>Transparante y plata</option>
+                  </select>
+                </div>
+                </div>
+            {/* </div> */}
           </>
         ) : (
           <>
-            <label className='input-label' htmlFor='medidaEje'>
-              Medida al Eje (mm){' '}
-            </label>
-            <input
-              placeholder='0'
-              type='text'
-              value={values.medidaEje}
-              className='number-input'
-              name='medidaEje'
-              id='medidaEje'
-              onChange={handleChange}
-            />
-            <label className='input-label' htmlFor='medidaDesarrollo'>
-              Medida al Desarrollo (mm){' '}
-            </label>
-            <input
-              placeholder='0'
-              type='text'
-              value={values.medidaDesarrollo}
-              className='number-input'
-              name='medidaDesarrollo'
-              id='medidaDesarrollo'
-              onChange={handleChange}
-            />
-            <label className='input-label' htmlFor='gapEje'>
-              Gap al eje (mm){' '}
-            </label>
-            <input
-              placeholder='0'
-              type='text'
-              value={values.gapEje}
-              className='number-input'
-              name='gapEje'
-              id='gapEje'
-              onChange={handleChange}
-            />
-            <label className='input-label' htmlFor='gapEje'>
-              Gap al Desarrollo (mm){' '}
-            </label>
-            <input
-              placeholder='0'
-              type='text'
-              value={values.gapDesarrollo}
-              className='number-input'
-              name='gapDesarrollo'
-              id='gapDesarrollo'
-              onChange={handleChange}
-            />
-            <label className='input-label' htmlFor='totalEtiquetas'>
-              Total de Etiquetas{' '}
-            </label>
-            <input
-              placeholder='0'
-              type='text'
-              value={values.totalEtiquetas}
-              className='number-input'
-              name='totalEtiquetas'
-              id='totalEtiquetas'
-              onChange={handleChange}
-            />
+            <div class="field">
+              <label class="label" htmlFor='medidaEje'>Medida al Eje (mm)</label>
+                <div class="control">
+                  <input class="input" value={values.medidaEje} type="text" placeholder="0" name='medidaEje' id='medidaEje' onChange={handleChange}/>
+                </div>
+            </div>
+            <div class="field">
+              <label class="label" htmlFor='medidaEje'>Medida al Desarrollo (mm)</label>
+                <div class="control">
+                  <input class="input" value={values.medidaDesarrollo} type="text" placeholder="0" name='medidaDesarrollo' id='medidaDesarrollo' onChange={handleChange}/>
+                </div>
+            </div>
+            <div class="field">
+              <label class="label" htmlFor='gapEje'>Gap al eje (mm){' '}</label>
+                <div class="control">
+                  <input class="input" value={values.gapEje} type="text" placeholder="0" name='gapEje' id='gapEje' onChange={handleChange}/>
+                </div>
+            </div>
+            <div class="field">
+              <label class="label" htmlFor='gapDesarrollo'>Gap al Desarrollo (mm)</label>
+                <div class="control">
+                  <input class="input" value={values.gapDesarrollo} type="text" placeholder="0" name='gapDesarrollo' id='gapDesarrollo' onChange={handleChange}/>
+                </div>
+            </div>
+            <div class="field">
+              <label class="label" htmlFor='totalEtiquetas'>Total de etiquetas individuales</label>
+                <div class="control">
+                  <input class="input" value={values.totalEtiquetas} type="text" placeholder="0" name='totalEtiquetas' id='totalEtiquetas' onChange={handleChange}/>
+                </div>
+            </div>
           </>
         )}
-
-        <button
-          type='button'
-          className='btn submit-btn'
-          onClick={() => setFirstStep(!firstStep)}
-        >
-          {firstStep ? 'Ir a Medidas' : 'Ir a especifiaciones'}
-        </button>
-        <button
-          className='btn toggle-btn'
-          type='button'
-          onClick={() => console.log(values)}
-        >
-          Generar Cotización
-        </button>
+        <div class="buttons">
+          <button class="button is-info" type='button' onClick={() => setFirstStep(!firstStep)}>{firstStep ? 'Ir a Medidas' : 'Ir a especifiaciones'}</button>
+          <button class="button is-success" type='button' onClick={() => console.log(values)}>Generar Cotización</button>
+        </div>
       </form>
       {!firstStep && (
-        <div className='computed-value-div'>
+        <div className='computed-value-div content'>
           <div className='computed-div'>
             Factor de M2: {m2Factor.toFixed(2)}
           </div>
           <div className='computed-div'>
-            Total de metros Lineales: {mtsLinealesTotales.toFixed(2)}
+            Metros lineales totales: {mtsLinealesTotales.toFixed(2)}
           </div>
           <div className='computed-div'>
             Factor de Merma: {merma.toFixed(2)}
@@ -263,21 +237,21 @@ const PricingForm = ({ step }) => {
             TIempo total en horas: {tiempoHoras.toFixed(2)}
           </div>
           <div className='computed-div'>
-            Costo Material por Mil: {costoPorMilUnitario.toFixed(2)}
+            Costo del material (USD) por cada millar: {costoPorMilUnitario.toFixed(2)}
           </div>
           <div className='computed-div'>
-            Costo Mano de Obra: {costoMO.toFixed(2)}
+            Costo de la mano de obra: {costoMO.toFixed(2)}
           </div>
           <div className='computed-div'>
-            Costo Fijo Total: {costoFijoTotal.toFixed(2)}
+            Costo fijo total: {costoFijoTotal.toFixed(2)}
           </div>
           <div className='computed-div'>
-            Costo Fijo por Mil Etiquetas: {costoFijoPorMil.toFixed(2)}
+            Costo fijo por cada millar: {costoFijoPorMil.toFixed(2)}
           </div>
           <div className='computed-div'>Precio: {precioVenta.toFixed(2)}</div>
-          <div className='computed-div'>utMillar: {utMillar.toFixed(2)}</div>
-          <div className='computed-div'>utPedido: {utPedido.toFixed(2)}</div>
-          <div className='computed-div'>utHoras: {utHoras.toFixed(2)}</div>
+          <div className='computed-div'>Utilidad po millar: {utMillar.toFixed(2)}</div>
+          <div className='computed-div'>Utilidad del pedido: {utPedido.toFixed(2)}</div>
+          <div className='computed-div'>Utilidad por horas: {utHoras.toFixed(2)}</div>
           <div className='computed-div'>Venta: {ventaTotal.toFixed(2)}</div>
           <div className='computed-div'>Comsión: {comision.toFixed(2)}</div>
         </div>
