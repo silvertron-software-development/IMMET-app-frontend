@@ -120,12 +120,12 @@ const PricingForm = ({ step }) => {
   }, [utPedido])
 
   return (
-    <Wrapper className='section content'>
+    <Wrapper className='section is-medium content'>
       <form className={`pricing-form ${firstStep && 'step-one'}`}>
         {firstStep ? (
           <>
-            <div class="field">
-              <label class="label has-text-white" htmlFor='numeroTintas'>Número de Tintas</label>
+            {/* <div class="field"> */}
+              <label class="label" htmlFor='numeroTintas'>Número de Tintas</label>
                 <div class="control">
                 <div class="select">
                   <select
@@ -143,10 +143,10 @@ const PricingForm = ({ step }) => {
                   </select>
                 </div>
                 </div>
-            </div>
+            {/* </div> */}
 
-            <div class="field">
-              <label class="label has-text-white" htmlFor='etiquetaNueva'>Etiqueta Nueva o Reimpresión</label>
+            {/* <div class="field"> */}
+              <label class="label" htmlFor='etiquetaNueva'>Etiqueta Nueva o Reimpresión</label>
                 <div class="control">
                 <div class="select">
                   <select
@@ -161,10 +161,10 @@ const PricingForm = ({ step }) => {
                   </select>
                 </div>
                 </div>
-            </div>
+            {/* </div> */}
 
-            <div class="field">
-              <label class="label has-text-white" htmlFor='material'>Material</label>
+            {/* <div class="field"> */}
+              <label class="label" htmlFor='material'>Material</label>
                 <div class="control">
                 <div class="select">
                   <select
@@ -181,70 +181,40 @@ const PricingForm = ({ step }) => {
                   </select>
                 </div>
                 </div>
-            </div>
+            {/* </div> */}
           </>
         ) : (
           <>
-            <label className='input-label' htmlFor='medidaEje'>
-              Medida al Eje (mm){' '}
-            </label>
-            <input
-              placeholder='0'
-              type='text'
-              value={values.medidaEje}
-              className='number-input'
-              name='medidaEje'
-              id='medidaEje'
-              onChange={handleChange}
-            />
-            <label className='input-label' htmlFor='medidaDesarrollo'>
-              Medida al Desarrollo (mm){' '}
-            </label>
-            <input
-              placeholder='0'
-              type='text'
-              value={values.medidaDesarrollo}
-              className='number-input'
-              name='medidaDesarrollo'
-              id='medidaDesarrollo'
-              onChange={handleChange}
-            />
-            <label className='input-label' htmlFor='gapEje'>
-              Gap al eje (mm){' '}
-            </label>
-            <input
-              placeholder='0'
-              type='text'
-              value={values.gapEje}
-              className='number-input'
-              name='gapEje'
-              id='gapEje'
-              onChange={handleChange}
-            />
-            <label className='input-label' htmlFor='gapEje'>
-              Gap al Desarrollo (mm){' '}
-            </label>
-            <input
-              placeholder='0'
-              type='text'
-              value={values.gapDesarrollo}
-              className='number-input'
-              name='gapDesarrollo'
-              id='gapDesarrollo'
-              onChange={handleChange}
-            />
-            <label className='input-label' htmlFor='totalEtiquetas'>
-              Total de Etiquetas{' '}
-            </label>
-            <input
-              placeholder='0'
-              type='text'
-              value={values.totalEtiquetas}
-              className='number-input'
-              name='totalEtiquetas'
-              id='totalEtiquetas'
-              onChange={handleChange}
-            />
+            <div class="field">
+              <label class="label" htmlFor='medidaEje'>Medida al Eje (mm)</label>
+                <div class="control">
+                  <input class="input" value={values.medidaEje} type="text" placeholder="0" name='medidaEje' id='medidaEje' onChange={handleChange}/>
+                </div>
+            </div>
+            <div class="field">
+              <label class="label" htmlFor='medidaEje'>Medida al Desarrollo (mm)</label>
+                <div class="control">
+                  <input class="input" value={values.medidaDesarrollo} type="text" placeholder="0" name='medidaDesarrollo' id='medidaDesarrollo' onChange={handleChange}/>
+                </div>
+            </div>
+            <div class="field">
+              <label class="label" htmlFor='gapEje'>Gap al eje (mm){' '}</label>
+                <div class="control">
+                  <input class="input" value={values.gapEje} type="text" placeholder="0" name='gapEje' id='gapEje' onChange={handleChange}/>
+                </div>
+            </div>
+            <div class="field">
+              <label class="label" htmlFor='gapDesarrollo'>Gap al Desarrollo (mm)</label>
+                <div class="control">
+                  <input class="input" value={values.gapDesarrollo} type="text" placeholder="0" name='gapDesarrollo' id='gapDesarrollo' onChange={handleChange}/>
+                </div>
+            </div>
+            <div class="field">
+              <label class="label" htmlFor='totalEtiquetas'>Total de etiquetas individuales</label>
+                <div class="control">
+                  <input class="input" value={values.totalEtiquetas} type="text" placeholder="0" name='totalEtiquetas' id='totalEtiquetas' onChange={handleChange}/>
+                </div>
+            </div>
           </>
         )}
         <div class="buttons">
@@ -253,12 +223,12 @@ const PricingForm = ({ step }) => {
         </div>
       </form>
       {!firstStep && (
-        <div className='computed-value-div'>
+        <div className='computed-value-div content'>
           <div className='computed-div'>
             Factor de M2: {m2Factor.toFixed(2)}
           </div>
           <div className='computed-div'>
-            Total de metros Lineales: {mtsLinealesTotales.toFixed(2)}
+            Metros lineales totales: {mtsLinealesTotales.toFixed(2)}
           </div>
           <div className='computed-div'>
             Factor de Merma: {merma.toFixed(2)}
@@ -267,21 +237,21 @@ const PricingForm = ({ step }) => {
             TIempo total en horas: {tiempoHoras.toFixed(2)}
           </div>
           <div className='computed-div'>
-            Costo Material por Mil: {costoPorMilUnitario.toFixed(2)}
+            Costo del material (USD) por cada millar: {costoPorMilUnitario.toFixed(2)}
           </div>
           <div className='computed-div'>
-            Costo Mano de Obra: {costoMO.toFixed(2)}
+            Costo de la mano de obra: {costoMO.toFixed(2)}
           </div>
           <div className='computed-div'>
-            Costo Fijo Total: {costoFijoTotal.toFixed(2)}
+            Costo fijo total: {costoFijoTotal.toFixed(2)}
           </div>
           <div className='computed-div'>
-            Costo Fijo por Mil Etiquetas: {costoFijoPorMil.toFixed(2)}
+            Costo fijo por cada millar: {costoFijoPorMil.toFixed(2)}
           </div>
           <div className='computed-div'>Precio: {precioVenta.toFixed(2)}</div>
-          <div className='computed-div'>utMillar: {utMillar.toFixed(2)}</div>
-          <div className='computed-div'>utPedido: {utPedido.toFixed(2)}</div>
-          <div className='computed-div'>utHoras: {utHoras.toFixed(2)}</div>
+          <div className='computed-div'>Utilidad po millar: {utMillar.toFixed(2)}</div>
+          <div className='computed-div'>Utilidad del pedido: {utPedido.toFixed(2)}</div>
+          <div className='computed-div'>Utilidad por horas: {utHoras.toFixed(2)}</div>
           <div className='computed-div'>Venta: {ventaTotal.toFixed(2)}</div>
           <div className='computed-div'>Comsión: {comision.toFixed(2)}</div>
         </div>
