@@ -17,3 +17,8 @@ export const materiales = [
   { itemValue: 'p_blanca', itemName: 'Pelicula Blanca' },
   { itemValue: 't_p', itemName: 'Transparante y Plata' },
 ]
+export const acabados = [
+  { itemValue: 'ninguno', itemName: 'ninguno' },
+  { itemValue: 'barniz', itemName: 'barniz' },
+  { itemValue: 'laminado', itemName: 'laminado' },
+]

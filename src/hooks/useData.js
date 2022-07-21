@@ -1,16 +1,17 @@
 const useData = ({
   medidaEje,
   medidaDesarrollo,
-  gapEje,
-  gapDesarrollo,
   totalEtiquetas,
   numeroTintas,
   etiquetaNueva,
+  tipoCambio,
   material,
 }) => {
   const suaje = 5000
   const grabados = 4000
-  const currencyExchange = 21
+  const currencyExchange = Number(tipoCambio) + 0.5
+  const gapEje = numeroTintas >= 1 ? 10 : 8
+  const gapDesarrollo = 4
 
   numeroTintas = Number(numeroTintas)
   etiquetaNueva = Number(etiquetaNueva)
