@@ -1,10 +1,18 @@
 import React, { useState } from 'react'
+import { addPricing, postNewPricing } from '../features/prices/pricesSlice'
 import styled from 'styled-components'
 import 'bulma/css/bulma.css'
 import FormRowSelect from './FormRowSelect'
-import { materiales, reimpresion, tintas, acabados } from '../utils/selectData'
+import {
+  materiales,
+  reimpresion,
+  tintas,
+  acabados,
+  prorateo,
+} from '../utils/selectData'
 import useData from '../hooks/useData'
 import FormRow from './FormRow'
+import { useDispatch } from 'react-redux'
 
 const PricingForm = () => {
   const [values, setValues] = useState({
@@ -16,51 +24,27 @@ const PricingForm = () => {
     etiquetaNueva: 0,
     material: 'thermal_transfer',
     acabado: 'ninguno',
+    prorateo: 'prorateo',
+    suaje: '',
+    grabados: '',
   })
+  const dispatch = useDispatch()
 
-  const {
-    m2Factor,
-    mtsLinealesTotales,
-    merma,
-    tiempoHoras,
-    costoPorMilUnitario,
-    costoMO,
-    costoFijoTotal,
-    costoFijoPorMil,
-    precioVenta,
-    utMillar,
-    utPedido,
-    utHoras,
-    ventaTotal,
-    comision,
-  } = useData({
-    ...values,
-  })
+  useData({ ...values })
 
   const handleChange = (e) => {
     console.log(e.target.value)
     setValues({ ...values, [e.target.name]: e.target.value })
   }
 
+  const sendPricings = (e) => {
+    dispatch(addPricing(values))
+    dispatch(postNewPricing())
+  }
+
   return (
     <Wrapper className='section is-medium content'>
       <form className='pricing-form'>
-        <FormRowSelect
-          labelText='Número de Tintas'
-          name='numeroTintas'
-          id='numeroTintas'
-          handleChange={handleChange}
-          list={tintas}
-          value={values.numeroTintas}
-        />
-        <FormRowSelect
-          labelText='Etiqueta Nueva o Reimpresión'
-          name='etiquetaNueva'
-          id='etiquetaNueva'
-          handleChange={handleChange}
-          list={reimpresion}
-          value={values.etiquetaNueva}
-        />
         <FormRowSelect
           labelText='Material'
           name='material'
@@ -77,6 +61,35 @@ const PricingForm = () => {
           list={acabados}
           value={values.acabado}
         />
+        <FormRowSelect
+          labelText='Etiqueta Nueva o Reimpresión'
+          name='etiquetaNueva'
+          id='etiquetaNueva'
+          handleChange={handleChange}
+          list={reimpresion}
+          value={values.etiquetaNueva}
+        />
+        {values.material !== 'p_blanca' && (
+          <FormRowSelect
+            labelText='Número de Tintas'
+            name='numeroTintas'
+            id='numeroTintas'
+            handleChange={handleChange}
+            list={tintas}
+            value={values.numeroTintas}
+          />
+        )}
+
+        {values.etiquetaNueva === '1' && (
+          <FormRowSelect
+            labelText='Proratear suaje y grabados'
+            name='prorateo'
+            id='prorateo'
+            handleChange={handleChange}
+            list={prorateo}
+            value={values.prorateo}
+          />
+        )}
 
         <FormRow
           labelText='Medida al Eje'
@@ -96,6 +109,28 @@ const PricingForm = () => {
           value={values.medidaDesarrollo}
           handleChange={handleChange}
         />
+        {values.etiquetaNueva === '1' && (
+          <>
+            <FormRow
+              labelText='Suaje'
+              type='text'
+              name='suaje'
+              id='suaje'
+              placeholder='0'
+              value={values.suaje}
+              handleChange={handleChange}
+            />
+            <FormRow
+              labelText='Grabados'
+              type='text'
+              name='grabados'
+              id='grabados'
+              placeholder='0'
+              value={values.grabados}
+              handleChange={handleChange}
+            />
+          </>
+        )}
         <FormRow
           labelText='Total de etiquetas individuales'
           type='text'
@@ -119,55 +154,19 @@ const PricingForm = () => {
           <button
             className='button is-info'
             type='button'
-            onClick={() => console.log('guardado')}
+            onClick={() => dispatch(addPricing(values))}
           >
-            Guardar y Agregar Nueva cotización
+            Guardar y Cotizar otra etiqueta
           </button>
           <button
             className='button is-success'
             type='button'
-            onClick={() => console.log(values)}
+            onClick={sendPricings}
           >
             Generar Cotización
           </button>
         </div>
       </form>
-
-      <div className='computed-value-div content'>
-        <div className='computed-div'>Factor de M2: {m2Factor}</div>
-        <div className='computed-div'>
-          Metros lineales totales: {mtsLinealesTotales.toFixed(2)}
-        </div>
-        <div className='computed-div'>Factor de Merma: {merma}</div>
-        <div className='computed-div'>
-          TIempo total en horas: {tiempoHoras.toFixed(2)}
-        </div>
-        <div className='computed-div'>
-          Costo del material (USD) por cada millar:{' '}
-          {costoPorMilUnitario.toFixed(2)}
-        </div>
-        <div className='computed-div'>
-          Costo de la mano de obra: {costoMO.toFixed(2)}
-        </div>
-        <div className='computed-div'>
-          Costo fijo total: {costoFijoTotal.toFixed(2)}
-        </div>
-        <div className='computed-div'>
-          Costo fijo por cada millar: {costoFijoPorMil.toFixed(2)}
-        </div>
-        <div className='computed-div'>Precio: {precioVenta.toFixed(2)}</div>
-        <div className='computed-div'>
-          Utilidad po millar: {utMillar.toFixed(2)}
-        </div>
-        <div className='computed-div'>
-          Utilidad del pedido: {utPedido.toFixed(2)}
-        </div>
-        <div className='computed-div'>
-          Utilidad por horas: {utHoras.toFixed(2)}
-        </div>
-        <div className='computed-div'>Venta: {ventaTotal.toFixed(2)}</div>
-        <div className='computed-div'>Comsión: {comision.toFixed(2)}</div>
-      </div>
     </Wrapper>
   )
 }

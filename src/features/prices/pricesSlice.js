@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
+import { v4 as uuidv4 } from 'uuid'
 
 const initialState = {
   cotizaciones: [],
@@ -9,11 +10,11 @@ const initialState = {
 
 export const postNewPricing = createAsyncThunk(
   'prices/postPricing',
-  async (prices, thunkAPI) => {
+  async (_, thunkAPI) => {
     try {
       const { data } = await axios.post(
         'http://localhost:5000/api/v1/prices',
-        prices
+        thunkAPI.getState().prices.cotizaciones
       )
       return data
     } catch (error) {
@@ -27,8 +28,15 @@ const pricesSlice = createSlice({
   initialState,
   reducers: {
     addPricing: (state, { payload }) => {
-      const newPricing = payload
-      state.cotizaciones = [...state.cotizaciones, newPricing]
+      const values = payload
+      const id = uuidv4()
+      state.cotizaciones = [...state.cotizaciones, { ...values, id }]
+    },
+    removePricing: (state, { payload }) => {
+      const deletedPricing = payload
+      state.cotizaciiones = state.cotizaciones.filter(
+        (cot) => cot.id !== deletedPricing.id
+      )
     },
   },
   extraReducers: {
