@@ -1,10 +1,15 @@
 import Layout from './components/Layout'
-import ParicingPage from './pages/PricingPage'
+import { Routes, Route } from 'react-router-dom'
+import PricingPage from './pages/PricingPage'
+import AllPricingsPage from './pages/AllPricingsPage'
 
 function App() {
   return (
     <Layout>
-      <ParicingPage />
+      <Routes>
+        <Route path='/' element={<PricingPage />} />
+        <Route path='/cotizaciones' element={<AllPricingsPage />} />
+      </Routes>
     </Layout>
   )
 }

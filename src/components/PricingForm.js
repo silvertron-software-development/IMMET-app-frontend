@@ -1,181 +1,172 @@
 import React, { useState } from 'react'
+import { addPricing, postNewPricing } from '../features/prices/pricesSlice'
 import styled from 'styled-components'
 import 'bulma/css/bulma.css'
 import FormRowSelect from './FormRowSelect'
-import { materiales, reimpresion, tintas } from '../utils/selectData'
+import {
+  materiales,
+  reimpresion,
+  tintas,
+  acabados,
+  prorateo,
+} from '../utils/selectData'
 import useData from '../hooks/useData'
 import FormRow from './FormRow'
+import { useDispatch } from 'react-redux'
 
-const PricingForm = ({ step }) => {
-  const [firstStep, setFirstStep] = useState(true)
+const PricingForm = () => {
   const [values, setValues] = useState({
     medidaEje: '',
     medidaDesarrollo: '',
-    gapEje: '',
-    gapDesarrollo: '',
+    tipoCambio: '',
     totalEtiquetas: '',
     numeroTintas: 1.1,
     etiquetaNueva: 0,
     material: 'thermal_transfer',
+    acabado: 'ninguno',
+    prorateo: 'prorateo',
+    suaje: '',
+    grabados: '',
   })
+  const dispatch = useDispatch()
 
-  const {
-    m2Factor,
-    mtsLinealesTotales,
-    merma,
-    tiempoHoras,
-    costoPorMilUnitario,
-    costoMO,
-    costoFijoTotal,
-    costoFijoPorMil,
-    precioVenta,
-    utMillar,
-    utPedido,
-    utHoras,
-    ventaTotal,
-    comision,
-  } = useData({
-    ...values,
-  })
+  useData({ ...values })
 
   const handleChange = (e) => {
     console.log(e.target.value)
     setValues({ ...values, [e.target.name]: e.target.value })
   }
 
+  const sendPricings = (e) => {
+    dispatch(addPricing(values))
+    dispatch(postNewPricing())
+  }
+
   return (
     <Wrapper className='section is-medium content'>
-      <form className={`pricing-form ${firstStep && 'step-one'}`}>
-        {firstStep ? (
+      <form className='pricing-form'>
+        <FormRowSelect
+          labelText='Material'
+          name='material'
+          id='material'
+          handleChange={handleChange}
+          list={materiales}
+          value={values.material}
+        />
+        <FormRowSelect
+          labelText='Acabado'
+          name='acabado'
+          id='acabado'
+          handleChange={handleChange}
+          list={acabados}
+          value={values.acabado}
+        />
+        <FormRowSelect
+          labelText='Etiqueta Nueva o Reimpresión'
+          name='etiquetaNueva'
+          id='etiquetaNueva'
+          handleChange={handleChange}
+          list={reimpresion}
+          value={values.etiquetaNueva}
+        />
+        {values.material !== 'p_blanca' && (
+          <FormRowSelect
+            labelText='Número de Tintas'
+            name='numeroTintas'
+            id='numeroTintas'
+            handleChange={handleChange}
+            list={tintas}
+            value={values.numeroTintas}
+          />
+        )}
+
+        {values.etiquetaNueva === '1' && (
+          <FormRowSelect
+            labelText='Proratear suaje y grabados'
+            name='prorateo'
+            id='prorateo'
+            handleChange={handleChange}
+            list={prorateo}
+            value={values.prorateo}
+          />
+        )}
+
+        <FormRow
+          labelText='Medida al Eje'
+          type='text'
+          name='medidaEje'
+          id='medidaEje'
+          placeholder='0'
+          value={values.medidaEje}
+          handleChange={handleChange}
+        />
+        <FormRow
+          labelText='Medida al Desarrollo'
+          type='text'
+          name='medidaDesarrollo'
+          id='medidaDesarrollo'
+          placeholder='0'
+          value={values.medidaDesarrollo}
+          handleChange={handleChange}
+        />
+        {values.etiquetaNueva === '1' && (
           <>
-            <FormRowSelect
-              labelText='Número de Tintas'
-              name='numeroTintas'
-              id='numeroTintas'
-              handleChange={handleChange}
-              list={tintas}
-              value={values.numeroTintas}
-            />
-            <FormRowSelect
-              labelText='Etiqueta Nueva o Reimpresión'
-              name='etiquetaNueva'
-              id='etiquetaNueva'
-              handleChange={handleChange}
-              list={reimpresion}
-              value={values.etiquetaNueva}
-            />
-            <FormRowSelect
-              labelText='Material'
-              name='material'
-              id='material'
-              handleChange={handleChange}
-              list={materiales}
-              value={values.material}
-            />
-          </>
-        ) : (
-          <>
             <FormRow
-              labelText='Medida al Eje'
+              labelText='Suaje'
               type='text'
-              name='medidaEje'
-              id='medidaEje'
+              name='suaje'
+              id='suaje'
               placeholder='0'
-              value={values.medidaEje}
+              value={values.suaje}
               handleChange={handleChange}
             />
             <FormRow
-              labelText='Medida al Desarrollo'
+              labelText='Grabados'
               type='text'
-              name='medidaDesarrollo'
-              id='medidaDesarrollo'
+              name='grabados'
+              id='grabados'
               placeholder='0'
-              value={values.medidaDesarrollo}
-              handleChange={handleChange}
-            />
-            <FormRow
-              labelText='Gap al Eje'
-              type='text'
-              name='gapEje'
-              id='gapEje'
-              placeholder='0'
-              value={values.gapEje}
-              handleChange={handleChange}
-            />
-            <FormRow
-              labelText='Gap al Desarrollo'
-              type='text'
-              name='gapDesarrollo'
-              id='gapDesarrollo'
-              placeholder='0'
-              value={values.gapDesarrollo}
-              handleChange={handleChange}
-            />
-            <FormRow
-              labelText='Total de etiquetas individuales'
-              type='text'
-              name='totalEtiquetas'
-              id='totalEtiquetas'
-              placeholder='0'
-              value={values.totalEtiquetas}
+              value={values.grabados}
               handleChange={handleChange}
             />
           </>
         )}
+        <FormRow
+          labelText='Total de etiquetas individuales'
+          type='text'
+          name='totalEtiquetas'
+          id='totalEtiquetas'
+          placeholder='0'
+          value={values.totalEtiquetas}
+          handleChange={handleChange}
+        />
+        <FormRow
+          labelText='Tipo de Cambio'
+          type='text'
+          name='tipoCambio'
+          id='tipoCambio'
+          placeholder='0'
+          value={values.tipoCambio}
+          handleChange={handleChange}
+        />
+
         <div className='buttons'>
           <button
             className='button is-info'
             type='button'
-            onClick={() => setFirstStep(!firstStep)}
+            onClick={() => dispatch(addPricing(values))}
           >
-            {firstStep ? 'Ir a Medidas' : 'Ir a especifiaciones'}
+            Guardar y Cotizar otra etiqueta
           </button>
           <button
             className='button is-success'
             type='button'
-            onClick={() => console.log(values)}
+            onClick={sendPricings}
           >
             Generar Cotización
           </button>
         </div>
       </form>
-      {!firstStep && (
-        <div className='computed-value-div content'>
-          <div className='computed-div'>Factor de M2: {m2Factor}</div>
-          <div className='computed-div'>
-            Metros lineales totales: {mtsLinealesTotales.toFixed(2)}
-          </div>
-          <div className='computed-div'>Factor de Merma: {merma}</div>
-          <div className='computed-div'>
-            TIempo total en horas: {tiempoHoras.toFixed(2)}
-          </div>
-          <div className='computed-div'>
-            Costo del material (USD) por cada millar:{' '}
-            {costoPorMilUnitario.toFixed(2)}
-          </div>
-          <div className='computed-div'>
-            Costo de la mano de obra: {costoMO.toFixed(2)}
-          </div>
-          <div className='computed-div'>
-            Costo fijo total: {costoFijoTotal.toFixed(2)}
-          </div>
-          <div className='computed-div'>
-            Costo fijo por cada millar: {costoFijoPorMil.toFixed(2)}
-          </div>
-          <div className='computed-div'>Precio: {precioVenta.toFixed(2)}</div>
-          <div className='computed-div'>
-            Utilidad po millar: {utMillar.toFixed(2)}
-          </div>
-          <div className='computed-div'>
-            Utilidad del pedido: {utPedido.toFixed(2)}
-          </div>
-          <div className='computed-div'>
-            Utilidad por horas: {utHoras.toFixed(2)}
-          </div>
-          <div className='computed-div'>Venta: {ventaTotal.toFixed(2)}</div>
-          <div className='computed-div'>Comsión: {comision.toFixed(2)}</div>
-        </div>
-      )}
     </Wrapper>
   )
 }
@@ -237,14 +228,12 @@ const Wrapper = styled.section`
   }
 
   @media (min-width: 900px) {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     .pricing-form {
       justify-items: center;
       gap: 1.5rem;
-    }
-
-    .step-one {
-      grid-column: 1 / 3;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
     }
 
     .form-select {

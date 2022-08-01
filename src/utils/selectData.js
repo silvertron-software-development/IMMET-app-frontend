@@ -1,4 +1,5 @@
 export const tintas = [
+  { itemValue: 1, itemName: '0' },
   { itemValue: 1.1, itemName: '1' },
   { itemValue: 1.15, itemName: '2' },
   { itemValue: 1.19, itemName: '3' },
@@ -16,4 +17,13 @@ export const materiales = [
   { itemValue: 'couche_satin', itemName: 'Couche Satin' },
   { itemValue: 'p_blanca', itemName: 'Pelicula Blanca' },
   { itemValue: 't_p', itemName: 'Transparante y Plata' },
+]
+export const acabados = [
+  { itemValue: 'ninguno', itemName: 'ninguno' },
+  { itemValue: 'barniz', itemName: 'barniz' },
+  { itemValue: 'laminado', itemName: 'laminado' },
+]
+export const prorateo = [
+  { itemValue: 'prorateo', itemName: 'Si' },
+  { itemValue: 'extra', itemName: 'No' },
 ]

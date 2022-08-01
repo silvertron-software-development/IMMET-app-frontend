@@ -1,7 +1,6 @@
 const FormRowSelect = ({ labelText, name, id, value, handleChange, list }) => {
   return (
-    <>
-      {/* <div class="field"> */}
+    <div>
       <label className='label' htmlFor={id}>
         {labelText || name}
       </label>
@@ -25,8 +24,7 @@ const FormRowSelect = ({ labelText, name, id, value, handleChange, list }) => {
           </select>
         </div>
       </div>
-      {/* </div> */}
-    </>
+    </div>
   )
 }
 export default FormRowSelect
