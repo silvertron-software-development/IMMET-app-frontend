@@ -8,7 +8,7 @@ import {
   reimpresion,
   tintas,
   acabados,
-  prorateo,
+  prorrateo,
 } from '../utils/selectData'
 import useData from '../hooks/useData'
 import FormRow from './FormRow'
@@ -20,11 +20,11 @@ const PricingForm = () => {
     medidaDesarrollo: '',
     tipoCambio: '',
     totalEtiquetas: '',
-    numeroTintas: 1.1,
+    numeroTintas: 1,
     etiquetaNueva: 0,
-    material: 'thermal_transfer',
+    material: .5107,
     acabado: 'ninguno',
-    prorateo: 'prorateo',
+    prorrateo: 'prorrateo',
     suaje: '',
     grabados: '',
   })
@@ -69,7 +69,6 @@ const PricingForm = () => {
           list={reimpresion}
           value={values.etiquetaNueva}
         />
-        {values.material !== 'p_blanca' && (
           <FormRowSelect
             labelText='Número de Tintas'
             name='numeroTintas'
@@ -78,16 +77,15 @@ const PricingForm = () => {
             list={tintas}
             value={values.numeroTintas}
           />
-        )}
 
-        {values.etiquetaNueva === '1' && (
+        {values.etiquetaNueva === '1' && ( //cambiar por checkboxes suaje y grabado individual
           <FormRowSelect
             labelText='Proratear suaje y grabados'
-            name='prorateo'
-            id='prorateo'
+            name='prorrateo'
+            id='prorrateo'
             handleChange={handleChange}
-            list={prorateo}
-            value={values.prorateo}
+            list={prorrateo}
+            value={values.prorrateo}
           />
         )}
 
