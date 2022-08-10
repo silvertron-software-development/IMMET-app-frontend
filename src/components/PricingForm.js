@@ -23,7 +23,8 @@ const PricingForm = () => {
     numeroTintas: 1,
     etiquetaNueva: 0,
     material: .5107,
-    acabado: 'ninguno',
+    // validacion de valor de acabado
+    acabado: 0,
     prorrateo: 'prorrateo',
     suaje: '',
     grabados: '',
