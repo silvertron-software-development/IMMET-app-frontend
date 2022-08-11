@@ -14,6 +14,7 @@ export const postNewPricing = createAsyncThunk(
     const cotizaciones = thunkAPI.getState().prices.cotizaciones
     console.log(cotizaciones)
     try {
+      console.log(cotizaciones)
       const { data } = await axios.post(
         'http://localhost:5000/api/v1/prices',
         cotizaciones,
@@ -54,6 +55,7 @@ const pricesSlice = createSlice({
       state.isLoading = true
     },
     [postNewPricing.fulfilled]: (state, { payload }) => {
+      state.cotizaciiones = []
       state.isLoading = false
     },
     [postNewPricing.rejected]: (state, { payload }) => {

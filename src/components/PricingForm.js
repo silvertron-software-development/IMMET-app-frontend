@@ -22,19 +22,30 @@ const PricingForm = () => {
     totalEtiquetas: '',
     numeroTintas: 1,
     etiquetaNueva: 0,
-    material: .5107,
-    acabado: 'ninguno',
+    material: 0.5107,
+    acabado: 0,
     prorrateo: 'prorrateo',
     suaje: '',
     grabados: '',
+    utilidad: 80,
   })
+  const [suajeDisplay, setSuajeDisplay] = useState(false)
   const dispatch = useDispatch()
 
-  useData({ ...values })
+  const { precioDeVenta } = useData({ ...values })
 
   const handleChange = (e) => {
     console.log(e.target.value)
     setValues({ ...values, [e.target.name]: e.target.value })
+  }
+
+  const handleSuajeChange = (e) => {
+    if (!suajeDisplay) {
+      setValues({ ...values, suaje: 0 })
+    } else {
+      setValues({ ...values, suaje: '' })
+    }
+    setSuajeDisplay(!suajeDisplay)
   }
 
   const sendPricings = (e) => {
@@ -69,14 +80,26 @@ const PricingForm = () => {
           list={reimpresion}
           value={values.etiquetaNueva}
         />
-          <FormRowSelect
-            labelText='Número de Tintas'
-            name='numeroTintas'
-            id='numeroTintas'
-            handleChange={handleChange}
-            list={tintas}
-            value={values.numeroTintas}
-          />
+        {values.etiquetaNueva === '1' && (
+          <div>
+            <label htmlFor='suajeDisplay'>Cobrar Suaje</label>
+            <input
+              type='checkbox'
+              value={suajeDisplay}
+              name='suajeDisplay'
+              onChange={handleSuajeChange}
+              id='suajeDisplay'
+            />
+          </div>
+        )}
+        <FormRowSelect
+          labelText='Número de Tintas'
+          name='numeroTintas'
+          id='numeroTintas'
+          handleChange={handleChange}
+          list={tintas}
+          value={values.numeroTintas}
+        />
 
         {values.etiquetaNueva === '1' && ( //cambiar por checkboxes suaje y grabado individual
           <FormRowSelect
@@ -109,15 +132,17 @@ const PricingForm = () => {
         />
         {values.etiquetaNueva === '1' && (
           <>
-            <FormRow
-              labelText='Suaje'
-              type='text'
-              name='suaje'
-              id='suaje'
-              placeholder='0'
-              value={values.suaje}
-              handleChange={handleChange}
-            />
+            {suajeDisplay && (
+              <FormRow
+                labelText='Suaje'
+                type='text'
+                name='suaje'
+                id='suaje'
+                placeholder='0'
+                value={values.suaje}
+                handleChange={handleChange}
+              />
+            )}
             <FormRow
               labelText='Grabados'
               type='text'
@@ -147,6 +172,19 @@ const PricingForm = () => {
           value={values.tipoCambio}
           handleChange={handleChange}
         />
+        <div>
+          <h6>Utilidad Sugerida: 80%</h6>
+          <label>Utilidad: {values.utilidad}</label>
+          <input
+            type='range'
+            name='utilidad'
+            value={values.utilidad}
+            max={80}
+            min={10}
+            step={5}
+            onChange={handleChange}
+          />
+        </div>
 
         <div className='buttons'>
           <button
@@ -163,6 +201,7 @@ const PricingForm = () => {
           >
             Generar Cotización
           </button>
+          <span>Precio de venta: {precioDeVenta}</span>
         </div>
       </form>
     </Wrapper>

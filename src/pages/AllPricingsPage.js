@@ -13,7 +13,7 @@ const AllPricingsPage = () => {
       </h2>
       <div>
         {cotizaciones.map((etiqueta) => {
-          const { id, material, tintas } = etiqueta
+          const { id, material, numeroTintas } = etiqueta
           return (
             <article key={id}>
               <div>
@@ -22,7 +22,7 @@ const AllPricingsPage = () => {
               </div>
               <div>
                 <h4>Tintas:</h4>
-                <span>{tintas}</span>
+                <span>{numeroTintas}</span>
               </div>
             </article>
           )

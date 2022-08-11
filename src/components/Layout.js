@@ -1,5 +1,6 @@
 import React from 'react'
 import 'bulma/css/bulma.css'
+import { Link } from 'react-router-dom'
 
 const Layout = ({ children }) => {
   return (
@@ -15,6 +16,12 @@ const Layout = ({ children }) => {
           </h1>
         </div>
         <div className='navbar-menu'>
+          <div className='navbar-item'>
+            <Link to='/'>Nueva cotizacion</Link>
+          </div>
+          <div className='navbar-item'>
+            <Link to='/cotizaciones'>Cotizaciones hechas</Link>
+          </div>
           <div className='navbar-end'>
             <div className='navbar-item has-text-white'>Cotizador IMMET</div>
           </div>
