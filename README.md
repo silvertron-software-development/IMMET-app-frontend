@@ -1,6 +1,24 @@
-# Getting Started
+# IMMET app frontend
 
-npm i && npm start
+## Repo setup
+
+### git clone
+
+```
+git clone git@github.com:silvertron-software-development/IMMET-app-frontend.git
+```
+
+### install dependencies through npm
+
+```
+npm i
+```
+
+### run project
+
+```
+npm start
+```
 
 ## Pricing App
 

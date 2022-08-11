@@ -26,7 +26,7 @@ export const materiales = [
   { itemValue: 0.7422, itemName: 'Pharma' },
 ]
 export const acabados = [
-  { itemValue: 0, itemName: 'ninguno' }, //confirmar que puede haber ningun acabado
+  { itemValue: 0, itemName: 'ninguno' },
   { itemValue: 0.12, itemName: 'barniz' },
   { itemValue: 0.18, itemName: 'laminado' },
 ]
