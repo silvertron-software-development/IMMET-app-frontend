@@ -14,21 +14,23 @@ import useData from '../hooks/useData'
 import FormRow from './FormRow'
 import { useDispatch } from 'react-redux'
 
+export const initState = {
+  medidaEje: '',
+  medidaDesarrollo: '',
+  tipoCambio: '',
+  totalEtiquetas: '',
+  numeroTintas: 1,
+  etiquetaNueva: 0,
+  material: 0.5107,
+  acabado: 0,
+  prorrateo: 'prorrateo',
+  suaje: '',
+  grabados: '',
+  utilidad: 80,
+}
+
 const PricingForm = () => {
-  const [values, setValues] = useState({
-    medidaEje: '',
-    medidaDesarrollo: '',
-    tipoCambio: '',
-    totalEtiquetas: '',
-    numeroTintas: 1,
-    etiquetaNueva: 0,
-    material: 0.5107,
-    acabado: 0,
-    prorrateo: 'prorrateo',
-    suaje: '',
-    grabados: '',
-    utilidad: 80,
-  })
+  const [values, setValues] = useState(initState)
   const [suajeDisplay, setSuajeDisplay] = useState(false)
   const dispatch = useDispatch()
 
@@ -39,18 +41,28 @@ const PricingForm = () => {
     setValues({ ...values, [e.target.name]: e.target.value })
   }
 
+  const resetValues = () => {
+    setValues(initState)
+  }
+
   const handleSuajeChange = (e) => {
     if (!suajeDisplay) {
-      setValues({ ...values, suaje: 0 })
+      setValues({ ...values, suaje: '' })
     } else {
       setValues({ ...values, suaje: '' })
     }
     setSuajeDisplay(!suajeDisplay)
   }
 
-  const sendPricings = (e) => {
+  const sendPricings = () => {
     dispatch(addPricing(values))
     dispatch(postNewPricing())
+    resetValues()
+  }
+
+  const addNewPricing = () => {
+    dispatch(addPricing(values))
+    resetValues()
   }
 
   return (
@@ -190,7 +202,7 @@ const PricingForm = () => {
           <button
             className='button is-info'
             type='button'
-            onClick={() => dispatch(addPricing(values))}
+            onClick={addNewPricing}
           >
             Guardar y Cotizar otra etiqueta
           </button>

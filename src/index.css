@@ -97,6 +97,10 @@ h1 {
   vertical-align: middle;
 }
 
+.pointer {
+  cursor: pointer;
+}
+
 @media (max-width: 900px) {
   h1 {
     font-size: 1.3rem;

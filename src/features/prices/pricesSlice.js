@@ -44,9 +44,11 @@ const pricesSlice = createSlice({
       state.cotizaciones = [...state.cotizaciones, { ...values, id }]
     },
     removePricing: (state, { payload }) => {
+      console.log(payload)
       const deletedPricing = payload
-      state.cotizaciiones = state.cotizaciones.filter(
-        (cot) => cot.id !== deletedPricing.id
+      console.log(deletedPricing)
+      state.cotizaciones = state.cotizaciones.filter(
+        (cot) => cot.id !== deletedPricing
       )
     },
   },
@@ -65,6 +67,6 @@ const pricesSlice = createSlice({
   },
 })
 
-export const { addPricing } = pricesSlice.actions
+export const { addPricing, removePricing } = pricesSlice.actions
 
 export default pricesSlice.reducer

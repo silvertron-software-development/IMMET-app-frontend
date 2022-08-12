@@ -45,3 +45,15 @@ export const tintasCantidad = {
   1.29: 6,
   1.32: 7,
 }
+
+export const materialesMap = {
+  0.5107: 'Thermal Transfer',
+  0.8755: 'Thermal Transfer Removible',
+  0.52: 'Térmico Directo',
+  0.5011: 'Couché Satin',
+  0.6671: 'BOPP Blanco',
+  0.6071: 'BOPP Transparente',
+  1.162: 'BOPP Plata 30 micras',
+  0.8: 'BOPP Plata',
+  0.7422: 'Pharma',
+}

@@ -16,10 +16,10 @@ const Layout = ({ children }) => {
           </h1>
         </div>
         <div className='navbar-menu'>
-          <div className='navbar-item'>
+          <div className='navbar-item has-text-white'>
             <Link to='/'>Nueva cotizacion</Link>
           </div>
-          <div className='navbar-item'>
+          <div className='navbar-item has-text-white'>
             <Link to='/cotizaciones'>Cotizaciones hechas</Link>
           </div>
           <div className='navbar-end'>

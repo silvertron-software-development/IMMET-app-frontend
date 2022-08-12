@@ -29,6 +29,7 @@ const useData = ({
 
   console.log(utilidad)
   console.log(acabado)
+  console.log(etiquetaNueva)
 
   //Blanca es 0 tinttas todo lo demás es impresa
   const isBlanca = tintasCantidad[numeroTintas] < 1
@@ -150,12 +151,16 @@ const useData = ({
     let extraProrrateo = 0
     if (prorrateo === 'prorrateo') {
       extraProrrateo = (suaje + grabados) / totalMillares
+      console.log(extraProrrateo)
     }
     newTag = Number(newTag)
+    console.log(newTag)
     let price = cost
     if (newTag === 0) {
+      console.log(price)
       return price
     } else {
+      console.log(price + extraProrrateo)
       return price + extraProrrateo
     }
   }
