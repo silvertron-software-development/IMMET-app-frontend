@@ -1,3 +1,4 @@
+import { calculateUtility } from '../utils/calculateUtility'
 import { tintasCantidad } from '../utils/selectData'
 
 const useData = ({
@@ -34,11 +35,11 @@ const useData = ({
   //Blanca es 0 tinttas todo lo demás es impresa
   const isBlanca = tintasCantidad[numeroTintas] < 1
 
-  console.log('Is Blanca: ', isBlanca)
+  // console.log('Is Blanca: ', isBlanca)
 
   const gapEje = !isBlanca ? 10 : 8
 
-  console.log('Gap al eje: ', gapEje)
+  // console.log('Gap al eje: ', gapEje)
 
   const gapDesarrollo = 4
 
@@ -52,11 +53,11 @@ const useData = ({
     ((medidaEje + gapEje) * (medidaDesarrollo + gapDesarrollo)) /
     factorDeConversionMetrosCuadrados
 
-  console.log('factor M2: ', factorMetrosCuadrados)
+  // console.log('factor M2: ', factorMetrosCuadrados)
 
   const totalMillares = totalEtiquetas / factorDeConversionEtiquetasAMillares
 
-  console.log('Total de millares: ', totalMillares)
+  // console.log('Total de millares: ', totalMillares)
 
   const medidaDePasoDeEtiquetaEstandar = 177
 
@@ -69,11 +70,11 @@ const useData = ({
     medidaDePasoDeEtiquetaEstandar / (medidaEje + gapEje)
   )
 
-  console.log('Etiquetas al paso: ', numeroDeEtiquetasAlPaso)
+  // console.log('Etiquetas al paso: ', numeroDeEtiquetasAlPaso)
 
   const totalDeMetrosCuadrados = factorMetrosCuadrados * totalEtiquetas
 
-  console.log('Total M2: ', totalDeMetrosCuadrados)
+  // console.log('Total M2: ', totalDeMetrosCuadrados)
 
   // TODO: no esta funcionando este error custom
   // if (totalDeMetrosCuadrados < 200) {
@@ -85,7 +86,7 @@ const useData = ({
     ((medidaDesarrollo + gapDesarrollo) * totalMillares) /
     numeroDeEtiquetasAlPaso
 
-  console.log('Metros lineales totales: ', metrosLinealesTotales)
+  // console.log('Metros lineales totales: ', metrosLinealesTotales)
 
   let factorDeMerma = 1
 
@@ -99,53 +100,59 @@ const useData = ({
     factorDeMerma += 150 / metrosLinealesTotales
   }
 
-  console.log('Factor de Merma: ', factorDeMerma)
+  // console.log('Factor de Merma: ', factorDeMerma)
 
   const metrosCuadradosMasMerma = totalDeMetrosCuadrados * factorDeMerma
 
-  console.log('M2 mas merma: ', metrosCuadradosMasMerma)
+  // console.log('M2 mas merma: ', metrosCuadradosMasMerma)
 
   const factorDeImpresion = numeroTintas
 
-  console.log('Factor de Impresion: ', factorDeImpresion)
+  // console.log('Factor de Impresion: ', factorDeImpresion)
 
   const metrosCuadradosMasImpresion =
     metrosCuadradosMasMerma * factorDeImpresion
 
-  console.log('M2 mas impresion: ', metrosCuadradosMasImpresion)
+  // console.log('M2 mas impresion: ', metrosCuadradosMasImpresion)
 
-  console.log('material', material)
-  console.log('acabado', acabado)
+  // console.log('material', material)
+  // console.log('acabado', acabado)
 
   const materialMasAcabado = material + acabado
 
-  console.log('factor de material: ', materialMasAcabado)
+  // console.log('factor de material: ', materialMasAcabado)
 
   const importeTotal = metrosCuadradosMasImpresion * materialMasAcabado
 
-  console.log('Importe total: ', importeTotal)
+  // console.log('Importe total: ', importeTotal)
 
   const importePorMillar = importeTotal / totalMillares
 
-  console.log('Importe por millar: ', importePorMillar)
+  // console.log('Importe por millar: ', importePorMillar)
+
+  const utilidadSugerida = calculateUtility(
+    numeroTintas,
+    totalDeMetrosCuadrados
+  )
+  console.log('utilidad sugierida:', utilidadSugerida)
 
   const tiempoAproximado = metrosLinealesTotales / 30 / 60
 
-  console.log('tiempo aprox', tiempoAproximado)
+  // console.log('tiempo aprox', tiempoAproximado)
 
   const horasExtraSumaManoDeObra = isBlanca ? 1 : 2
 
-  console.log('horas extra', horasExtraSumaManoDeObra)
+  // console.log('horas extra', horasExtraSumaManoDeObra)
 
   const tiempoHorasManoDeObra = tiempoAproximado + horasExtraSumaManoDeObra
 
-  console.log('tiempo total', tiempoHorasManoDeObra)
+  // console.log('tiempo total', tiempoHorasManoDeObra)
 
   // const tiempoTotal = tiempoAproximado + horasExtraSumaManoDeObra
 
   const importePorMillarPesos = importePorMillar * tipoCambio
 
-  console.log('importe por millar en pesos', importePorMillarPesos)
+  // console.log('importe por millar en pesos', importePorMillarPesos)
 
   const calculatePrice = (cost, newTag) => {
     let extraProrrateo = 0
@@ -175,13 +182,13 @@ const useData = ({
     ? sueldoManoDeObraBlancas
     : sueldoManoDeObraImpresas
 
-  console.log('mano de obra fija', manoDeObraFija)
+  // console.log('mano de obra fija', manoDeObraFija)
 
   const horasDia = 8
 
   const costoManoDeObra = (manoDeObraFija / horasDia) * tiempoHorasManoDeObra
 
-  console.log('costo mano de obra', costoManoDeObra)
+  // console.log('costo mano de obra', costoManoDeObra)
 
   let costoMetroCuadradoPorMaquina = 0
 
@@ -217,7 +224,7 @@ const useData = ({
     costoMetroCuadradoPorMaquina = 1
   }
 
-  console.log('costo M2 por maquina', costoMetroCuadradoPorMaquina)
+  // console.log('costo M2 por maquina', costoMetroCuadradoPorMaquina)
 
   const costoFijoTotal =
     metrosCuadradosMasImpresion * costoMetroCuadradoPorMaquina
@@ -229,7 +236,7 @@ const useData = ({
 
   const precioDeVenta = costoFinal * utilidad
 
-  console.log(precioDeVenta)
+  // console.log(precioDeVenta)
 
   // const utMillar = precioVenta - (costoFijoPorMil + precio)
 
@@ -243,6 +250,8 @@ const useData = ({
 
   return {
     precioDeVenta,
+    totalDeMetrosCuadrados,
+    utilidadSugerida,
   }
 }
 
