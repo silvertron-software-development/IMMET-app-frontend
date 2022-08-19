@@ -22,7 +22,7 @@ export const calculateUtility = (tintas, metrosCuadradosTotales) => {
 
   if (metrosCuadradosTotales < 800) {
     queryString += 'S'
-  } else if (metrosCuadradosTotales < 2000) {
+  } else if (metrosCuadradosTotales < 1800 && metrosCuadradosTotales >= 800) {
     queryString += 'M'
   } else {
     queryString += 'G'

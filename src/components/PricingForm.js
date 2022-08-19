@@ -230,7 +230,7 @@ const PricingForm = () => {
       </form>
       {totalDeMetrosCuadrados < 200 && values.totalEtiquetas && (
         <div>
-          <span className='m2-error'>
+          <span className='has-text-danger'>
             El total de metros cuadrados es menor a 200!
           </span>
         </div>
