@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { addPricing, postNewPricing } from '../features/prices/pricesSlice'
 import styled from 'styled-components'
 import 'bulma/css/bulma.css'
@@ -13,6 +13,7 @@ import {
 import useData from '../hooks/useData'
 import FormRow from './FormRow'
 import { useDispatch } from 'react-redux'
+import { calculateUtility } from '../utils/calculateUtility'
 
 export const initState = {
   medidaEje: '',
@@ -34,7 +35,18 @@ const PricingForm = () => {
   const [suajeDisplay, setSuajeDisplay] = useState(false)
   const dispatch = useDispatch()
 
-  const { precioDeVenta } = useData({ ...values })
+  const { precioDeVenta, totalDeMetrosCuadrados } = useData({
+    ...values,
+  })
+
+  const utilidadSugerida = calculateUtility(
+    values.numeroTintas,
+    totalDeMetrosCuadrados
+  )
+  useEffect(() => {
+    setValues({ ...values, utilidad: utilidadSugerida })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [utilidadSugerida])
 
   const handleChange = (e) => {
     console.log(e.target.value)
@@ -185,14 +197,14 @@ const PricingForm = () => {
           handleChange={handleChange}
         />
         <div>
-          <h6>Utilidad Sugerida: 80%</h6>
+          <h6>Utilidad Sugerida: {utilidadSugerida}%</h6>
           <label>Utilidad: {values.utilidad}</label>
           <input
             type='range'
             name='utilidad'
             value={values.utilidad}
-            max={80}
-            min={10}
+            max={200}
+            min={30}
             step={5}
             onChange={handleChange}
           />
@@ -216,6 +228,13 @@ const PricingForm = () => {
           <span>Precio de venta: {precioDeVenta}</span>
         </div>
       </form>
+      {totalDeMetrosCuadrados < 200 && values.totalEtiquetas && (
+        <div>
+          <span className='has-text-danger'>
+            El total de metros cuadrados es menor a 200!
+          </span>
+        </div>
+      )}
     </Wrapper>
   )
 }
@@ -274,6 +293,10 @@ const Wrapper = styled.section`
 
   .submit-btn {
     background-color: rgb(1, 113, 181);
+  }
+
+  .m2-error {
+    color: red;
   }
 
   @media (min-width: 900px) {
