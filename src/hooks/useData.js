@@ -232,6 +232,8 @@ const useData = ({
 
   const precioDeVenta = costoFinal * utilidad
 
+  let sPrecioDeVenta = precioDeVenta.toString
+
   // console.log(precioDeVenta)
 
   const utilidadPorMillar = precioDeVenta - costoFinal
@@ -244,11 +246,13 @@ const useData = ({
 
   const comision = utilidadDelPedido * 0.13
 
+  let sComision = comision.toString
+
   return {
-    precioDeVenta,
+    sPrecioDeVenta,
     totalDeMetrosCuadrados,
     utilidadSugerida,
-    comision
+    sComision
   }
 }
 
