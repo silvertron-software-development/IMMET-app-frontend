@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 
 const Layout = ({ children }) => {
   return (
+    // TODO: menu responsive no se ve
     <>
       <nav
         className='navbar has-shadow'

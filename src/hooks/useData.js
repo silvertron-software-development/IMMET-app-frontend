@@ -22,8 +22,8 @@ const useData = ({
   totalEtiquetas = Number(totalEtiquetas)
   numeroTintas = Number(numeroTintas)
   etiquetaNueva = Number(etiquetaNueva)
-  suaje = Number(etiquetaNueva)
-  grabados = Number(etiquetaNueva)
+  suaje = Number(suaje)
+  grabados = Number(grabados)
   material = Number(material)
   acabado = Number(acabado)
   utilidad = Number(utilidad) / 100 + 1
@@ -34,101 +34,154 @@ const useData = ({
 
   //Blanca es 0 tinttas todo lo demás es impresa
   const isBlanca = tintasCantidad[numeroTintas] < 1
+    const isFondeada = tintasCantidad[numeroTintas] < 2
 
-  // console.log('Is Blanca: ', isBlanca)
+    const gapEje = !isBlanca ? 10 : 8
 
-  const gapEje = !isBlanca ? 10 : 8
+    const gapDesarrollo = 4
 
-  // console.log('Gap al eje: ', gapEje)
+    tipoCambio = tipoCambio + 0.5
 
-  const gapDesarrollo = 4
+    const factorDeConversionMetrosCuadrados = 1000000
 
-  tipoCambio = tipoCambio + 0.5
+    const factorDeConversionEtiquetasAMillares = 1000
 
-  const factorDeConversionMetrosCuadrados = 1000000
+    const factorMetrosCuadrados =
+      ((medidaEje + gapEje) * (medidaDesarrollo + gapDesarrollo)) /
+      factorDeConversionMetrosCuadrados
 
-  const factorDeConversionEtiquetasAMillares = 1000
+    const totalMillares = totalEtiquetas / factorDeConversionEtiquetasAMillares
 
-  const factorMetrosCuadrados =
-    ((medidaEje + gapEje) * (medidaDesarrollo + gapDesarrollo)) /
-    factorDeConversionMetrosCuadrados
+    const medidaDePasoDeEtiquetaEstandar = 177
 
-  // console.log('factor M2: ', factorMetrosCuadrados)
+    // const medidaDePasoDeEtiquetaExpress = 254
 
-  const totalMillares = totalEtiquetas / factorDeConversionEtiquetasAMillares
+    //const numeroDeEtiquetasAlPaso = tintas[numeroTintas] < 1 ? Math.floor(254 / (medidaEje + gapEje)) : Math.floor(177 / (medidaEje + gapEje))
 
-  // console.log('Total de millares: ', totalMillares)
+    // TODO: revisar bien las medidas de los pasos, no concuerdan con excel
+    const numeroDeEtiquetasAlPaso = Math.floor(
+      medidaDePasoDeEtiquetaEstandar / (medidaEje + gapEje)
+    )
 
-  const medidaDePasoDeEtiquetaEstandar = 177
+    const totalDeMetrosCuadrados = factorMetrosCuadrados * totalEtiquetas
 
-  // const medidaDePasoDeEtiquetaExpress = 254
+    //Contempla ya los pasos con 7 pulgadas
+    const metrosLinealesTotales =
+      ((medidaDesarrollo + gapDesarrollo) * totalMillares) /
+      numeroDeEtiquetasAlPaso
 
-  //const numeroDeEtiquetasAlPaso = tintas[numeroTintas] < 1 ? Math.floor(254 / (medidaEje + gapEje)) : Math.floor(177 / (medidaEje + gapEje))
+    let factorDeMerma = 1
+    console.log(
+      factorDeMerma,
+      tintasCantidad[numeroTintas],
+      150 / metrosLinealesTotales
+    )
+    console.log(isBlanca, !isBlanca)
+    if (!isBlanca && 150 / metrosLinealesTotales <= 0.1) {
+      factorDeMerma += 0.1
+      console.log(factorDeMerma)
+    } else if (!isBlanca && 150 / metrosLinealesTotales > 0.1) {
+      factorDeMerma += 150 / metrosLinealesTotales
+      console.log(factorDeMerma)
+    } else if (isBlanca && 150 / metrosLinealesTotales <= 0.05) {
+      factorDeMerma += 0.05
+      console.log(factorDeMerma)
+    } else if (isBlanca && 150 / metrosLinealesTotales > 0.05) {
+      factorDeMerma += 150 / metrosLinealesTotales
+      console.log(factorDeMerma)
+    }
 
-  // TODO: revisar bien las medidas de los pasos, no concuerdan con excel
-  const numeroDeEtiquetasAlPaso = Math.floor(
-    medidaDePasoDeEtiquetaEstandar / (medidaEje + gapEje)
-  )
+    const metrosCuadradosMasMerma = totalDeMetrosCuadrados * factorDeMerma
 
-  // console.log('Etiquetas al paso: ', numeroDeEtiquetasAlPaso)
+    const factorDeImpresion = numeroTintas
 
-  const totalDeMetrosCuadrados = factorMetrosCuadrados * totalEtiquetas
+    const metrosCuadradosMasImpresion =
+      metrosCuadradosMasMerma * factorDeImpresion
 
-  // console.log('Total M2: ', totalDeMetrosCuadrados)
+    const materialMasAcabado = material + acabado
 
-  // TODO: no esta funcionando este error custom
-  // if (totalDeMetrosCuadrados < 200) {
-  //    throw new BadRequestError('El minimo de m2 a cotizar son 200')
-  // }
+    const importeTotal = metrosCuadradosMasImpresion * materialMasAcabado
 
-  //Contempla ya los pasos con 7 pulgadas
-  const metrosLinealesTotales =
-    ((medidaDesarrollo + gapDesarrollo) * totalMillares) /
-    numeroDeEtiquetasAlPaso
+    const importePorMillar = importeTotal / totalMillares
 
-  // console.log('Metros lineales totales: ', metrosLinealesTotales)
+    const tiempoAproximado = metrosLinealesTotales / 30 / 60
 
-  let factorDeMerma = 1
+    const horasExtraSumaManoDeObra = isBlanca ? 1 : 2
 
-  if (!isBlanca && 150 / metrosLinealesTotales <= 0.1) {
-    factorDeMerma += 0.1
-  } else if (!isBlanca && 150 / metrosLinealesTotales > 0.1) {
-    factorDeMerma += 150 / metrosLinealesTotales
-  } else if (isBlanca && 150 / metrosLinealesTotales <= 0.05) {
-    factorDeMerma += 0.05
-  } else if (isBlanca && 150 / metrosLinealesTotales > 0.05) {
-    factorDeMerma += 150 / metrosLinealesTotales
-  }
+    const tiempoHorasManoDeObra = tiempoAproximado + horasExtraSumaManoDeObra
 
-  // console.log('Factor de Merma: ', factorDeMerma)
+    // const tiempoTotal = tiempoAproximado + horasExtraSumaManoDeObra
 
-  const metrosCuadradosMasMerma = totalDeMetrosCuadrados * factorDeMerma
+    const importePorMillarPesos = importePorMillar * tipoCambio
 
-  // console.log('M2 mas merma: ', metrosCuadradosMasMerma)
+    const calculatePrice = (cost, newTag) => {
+      let extraProrrateo = 0
+      if (prorrateo === 'prorrateo') {
+        extraProrrateo = (suaje + grabados) / totalMillares
+      }
+      newTag = Number(newTag)
+      let price = cost
+      if (newTag === 0) {
+        return price
+      } else {
+        return price + extraProrrateo
+      }
+    }
 
-  const factorDeImpresion = numeroTintas
+    const precio = calculatePrice(importePorMillarPesos, etiquetaNueva)
 
-  // console.log('Factor de Impresion: ', factorDeImpresion)
+    const sueldoManoDeObraBlancas = 400
 
-  const metrosCuadradosMasImpresion =
-    metrosCuadradosMasMerma * factorDeImpresion
+    const sueldoManoDeObraImpresas = 700
 
-  // console.log('M2 mas impresion: ', metrosCuadradosMasImpresion)
+    const manoDeObraFija = isBlanca
+      ? sueldoManoDeObraBlancas
+      : sueldoManoDeObraImpresas
 
-  // console.log('material', material)
-  // console.log('acabado', acabado)
+    const horasDia = 8
 
-  const materialMasAcabado = material + acabado
+    const costoManoDeObra = (manoDeObraFija / horasDia) * tiempoHorasManoDeObra
 
-  // console.log('factor de material: ', materialMasAcabado)
+    let costoMetroCuadradoPorMaquina = 0
 
-  const importeTotal = metrosCuadradosMasImpresion * materialMasAcabado
+    if (
+      (!isBlanca && !isFondeada) &&
+      totalDeMetrosCuadrados < 800
+    ) {
+      costoMetroCuadradoPorMaquina = 7.5
+    } else if (
+      (!isBlanca && !isFondeada) &&
+      totalDeMetrosCuadrados >= 800 &&
+      totalDeMetrosCuadrados < 1800
+    ) {
+      costoMetroCuadradoPorMaquina = 6
+    } else if ((!isBlanca && !isFondeada) && totalDeMetrosCuadrados >= 1800) {
+      costoMetroCuadradoPorMaquina = 4
+    } else if (
+      (isBlanca || isFondeada) &&
+      totalDeMetrosCuadrados < 800
+    ) {
+      costoMetroCuadradoPorMaquina = 4
+    } else if (
+      (isBlanca || isFondeada) &&
+      totalDeMetrosCuadrados >= 800 &&
+      totalDeMetrosCuadrados < 1800
+    ) {
+      costoMetroCuadradoPorMaquina = 2.5
+    } else if ((isBlanca || isFondeada) && totalDeMetrosCuadrados >= 1800) {
+      costoMetroCuadradoPorMaquina = 1
+    }
 
-  // console.log('Importe total: ', importeTotal)
+    const costoFijoTotal =
+      metrosCuadradosMasImpresion * costoMetroCuadradoPorMaquina
 
-  const importePorMillar = importeTotal / totalMillares
+    const costoFijoTotalPorMillar =
+      (costoFijoTotal + costoManoDeObra) / totalMillares
 
-  // console.log('Importe por millar: ', importePorMillar)
+    const costoFinal = precio + costoFijoTotalPorMillar
+
+    const precioDeVenta = costoFinal * utilidad
+
 
   const utilidadSugerida = calculateUtility(
     numeroTintas,
@@ -136,122 +189,21 @@ const useData = ({
   )
   console.log('utilidad sugierida:', utilidadSugerida)
 
-  const tiempoAproximado = metrosLinealesTotales / 30 / 60
+  const utilidadPorMillar = precioDeVenta - costoFinal
 
-  // console.log('tiempo aprox', tiempoAproximado)
-
-  const horasExtraSumaManoDeObra = isBlanca ? 1 : 2
-
-  // console.log('horas extra', horasExtraSumaManoDeObra)
-
-  const tiempoHorasManoDeObra = tiempoAproximado + horasExtraSumaManoDeObra
-
-  // console.log('tiempo total', tiempoHorasManoDeObra)
-
-  // const tiempoTotal = tiempoAproximado + horasExtraSumaManoDeObra
-
-  const importePorMillarPesos = importePorMillar * tipoCambio
-
-  // console.log('importe por millar en pesos', importePorMillarPesos)
-
-  const calculatePrice = (cost, newTag) => {
-    let extraProrrateo = 0
-    if (prorrateo === 'prorrateo') {
-      extraProrrateo = (suaje + grabados) / totalMillares
-      console.log(extraProrrateo)
-    }
-    newTag = Number(newTag)
-    console.log(newTag)
-    let price = cost
-    if (newTag === 0) {
-      console.log(price)
-      return price
-    } else {
-      console.log(price + extraProrrateo)
-      return price + extraProrrateo
-    }
-  }
-
-  const precio = calculatePrice(importePorMillarPesos, etiquetaNueva)
-
-  const sueldoManoDeObraBlancas = 400
-
-  const sueldoManoDeObraImpresas = 700
-
-  const manoDeObraFija = isBlanca
-    ? sueldoManoDeObraBlancas
-    : sueldoManoDeObraImpresas
-
-  // console.log('mano de obra fija', manoDeObraFija)
-
-  const horasDia = 8
-
-  const costoManoDeObra = (manoDeObraFija / horasDia) * tiempoHorasManoDeObra
-
-  // console.log('costo mano de obra', costoManoDeObra)
-
-  let costoMetroCuadradoPorMaquina = 0
-
-  // Preguntar por los rangos de 600 a 800 m2 y de 1600 a 2000 m2 ya que no estan definidos
-
-  if (
-    !isBlanca &&
-    totalDeMetrosCuadrados >= 200 &&
-    totalDeMetrosCuadrados < 800
-  ) {
-    costoMetroCuadradoPorMaquina = 7.5
-  } else if (
-    !isBlanca &&
-    totalDeMetrosCuadrados >= 800 &&
-    totalDeMetrosCuadrados < 2000
-  ) {
-    costoMetroCuadradoPorMaquina = 6
-  } else if (!isBlanca && totalDeMetrosCuadrados >= 2000) {
-    costoMetroCuadradoPorMaquina = 4
-  } else if (
-    isBlanca &&
-    totalDeMetrosCuadrados >= 200 &&
-    totalDeMetrosCuadrados < 800
-  ) {
-    costoMetroCuadradoPorMaquina = 4
-  } else if (
-    isBlanca &&
-    totalDeMetrosCuadrados >= 800 &&
-    totalDeMetrosCuadrados < 2000
-  ) {
-    costoMetroCuadradoPorMaquina = 2.5
-  } else if (isBlanca && totalDeMetrosCuadrados >= 2000) {
-    costoMetroCuadradoPorMaquina = 1
-  }
-
-  // console.log('costo M2 por maquina', costoMetroCuadradoPorMaquina)
-
-  const costoFijoTotal =
-    metrosCuadradosMasImpresion * costoMetroCuadradoPorMaquina
-
-  const costoFijoTotalPorMillar =
-    (costoFijoTotal + costoManoDeObra) / totalMillares
-
-  const costoFinal = precio + costoFijoTotalPorMillar
-
-  const precioDeVenta = costoFinal * utilidad
-
-  // console.log(precioDeVenta)
-
-  // const utMillar = precioVenta - (costoFijoPorMil + precio)
-
-  // const utPedido = utMillar * (totalEtiquetas / 1000)
+  const utilidadDelPedido = utilidadPorMillar * totalMillares
 
   // const utHoras = utPedido / tiempoHoras
 
   // const ventaTotal = precioVenta * (totalEtiquetas / 1000)
 
-  // const comision = utPedido * 0.2
+  const comision = utilidadDelPedido * 0.13
 
   return {
     precioDeVenta,
     totalDeMetrosCuadrados,
     utilidadSugerida,
+    comision
   }
 }
 
