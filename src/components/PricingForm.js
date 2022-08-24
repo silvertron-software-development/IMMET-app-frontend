@@ -35,7 +35,7 @@ const PricingForm = () => {
   const [suajeDisplay, setSuajeDisplay] = useState(false)
   const dispatch = useDispatch()
 
-  const { precioDeVenta, totalDeMetrosCuadrados } = useData({
+  const { precioDeVenta, totalDeMetrosCuadrados, comision } = useData({
     ...values,
   })
 
@@ -80,23 +80,7 @@ const PricingForm = () => {
   return (
     <Wrapper className='section is-medium content'>
       <form className='pricing-form'>
-        <FormRowSelect
-          labelText='Material'
-          name='material'
-          id='material'
-          handleChange={handleChange}
-          list={materiales}
-          value={values.material}
-        />
-        <FormRowSelect
-          labelText='Acabado'
-          name='acabado'
-          id='acabado'
-          handleChange={handleChange}
-          list={acabados}
-          value={values.acabado}
-        />
-        <FormRowSelect
+      <FormRowSelect
           labelText='Etiqueta Nueva o Reimpresión'
           name='etiquetaNueva'
           id='etiquetaNueva'
@@ -116,44 +100,7 @@ const PricingForm = () => {
             />
           </div>
         )}
-        <FormRowSelect
-          labelText='Número de Tintas'
-          name='numeroTintas'
-          id='numeroTintas'
-          handleChange={handleChange}
-          list={tintas}
-          value={values.numeroTintas}
-        />
-
-        {values.etiquetaNueva === '1' && ( //cambiar por checkboxes suaje y grabado individual
-          <FormRowSelect
-            labelText='Proratear suaje y grabados'
-            name='prorrateo'
-            id='prorrateo'
-            handleChange={handleChange}
-            list={prorrateo}
-            value={values.prorrateo}
-          />
-        )}
-
-        <FormRow
-          labelText='Medida al Eje'
-          type='text'
-          name='medidaEje'
-          id='medidaEje'
-          placeholder='0'
-          value={values.medidaEje}
-          handleChange={handleChange}
-        />
-        <FormRow
-          labelText='Medida al Desarrollo'
-          type='text'
-          name='medidaDesarrollo'
-          id='medidaDesarrollo'
-          placeholder='0'
-          value={values.medidaDesarrollo}
-          handleChange={handleChange}
-        />
+        
         {values.etiquetaNueva === '1' && (
           <>
             {suajeDisplay && (
@@ -178,6 +125,66 @@ const PricingForm = () => {
             />
           </>
         )}
+
+        {values.etiquetaNueva === '1' && ( //cambiar por checkboxes suaje y grabado individual
+          <FormRowSelect
+            labelText='Proratear suaje y grabados'
+            name='prorrateo'
+            id='prorrateo'
+            handleChange={handleChange}
+            list={prorrateo}
+            value={values.prorrateo}
+          />
+        )}
+
+        <FormRowSelect
+          labelText='Material'
+          name='material'
+          id='material'
+          handleChange={handleChange}
+          list={materiales}
+          value={values.material}
+        />
+        <FormRowSelect
+          labelText='Acabado'
+          name='acabado'
+          id='acabado'
+          handleChange={handleChange}
+          list={acabados}
+          value={values.acabado}
+        />
+        
+        
+        <FormRowSelect
+          labelText='Número de Tintas'
+          name='numeroTintas'
+          id='numeroTintas'
+          handleChange={handleChange}
+          list={tintas}
+          value={values.numeroTintas}
+        />
+
+        
+
+        <FormRow
+          labelText='Medida al Eje'
+          type='text'
+          name='medidaEje'
+          id='medidaEje'
+          placeholder='0'
+          value={values.medidaEje}
+          handleChange={handleChange}
+        />
+        <FormRow
+          labelText='Medida al Desarrollo'
+          type='text'
+          name='medidaDesarrollo'
+          id='medidaDesarrollo'
+          placeholder='0'
+          value={values.medidaDesarrollo}
+          handleChange={handleChange}
+        />
+        
         <FormRow
           labelText='Total de etiquetas individuales'
           type='text'
@@ -225,13 +232,14 @@ const PricingForm = () => {
           >
             Generar Cotización
           </button>
-          <span>Precio de venta: {precioDeVenta}</span>
+          <span className='has-text-weight-bold is-size-3'>Precio de venta:</span> <span>{precioDeVenta}</span>
+          <span className='has-text-weight-bold is-size-3'>Comisión:</span><span>{comision}</span>
         </div>
       </form>
       {totalDeMetrosCuadrados < 200 && values.totalEtiquetas && (
         <div>
-          <span className='has-text-danger'>
-            El total de metros cuadrados es menor a 200!
+          <span className='has-text-danger is-size-3'>
+            El total de metros cuadrados en el pedido es menor a 200.
           </span>
         </div>
       )}

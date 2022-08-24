@@ -34,6 +34,7 @@ const useData = ({
 
   //Blanca es 0 tinttas todo lo demás es impresa
   const isBlanca = tintasCantidad[numeroTintas] < 1
+  const isFondeada = tintasCantidad[numeroTintas] < 2
 
   // console.log('Is Blanca: ', isBlanca)
 
@@ -158,16 +159,13 @@ const useData = ({
     let extraProrrateo = 0
     if (prorrateo === 'prorrateo') {
       extraProrrateo = (suaje + grabados) / totalMillares
-      console.log(extraProrrateo)
     }
     newTag = Number(newTag)
-    console.log(newTag)
     let price = cost
     if (newTag === 0) {
-      console.log(price)
+      console.log('newtag: ', newTag);
       return price
     } else {
-      console.log(price + extraProrrateo)
       return price + extraProrrateo
     }
   }
@@ -195,32 +193,30 @@ const useData = ({
   // Preguntar por los rangos de 600 a 800 m2 y de 1600 a 2000 m2 ya que no estan definidos
 
   if (
-    !isBlanca &&
-    totalDeMetrosCuadrados >= 200 &&
+    (!isBlanca && !isFondeada) &&
     totalDeMetrosCuadrados < 800
   ) {
     costoMetroCuadradoPorMaquina = 7.5
   } else if (
-    !isBlanca &&
+    (!isBlanca && !isFondeada) &&
     totalDeMetrosCuadrados >= 800 &&
-    totalDeMetrosCuadrados < 2000
+    totalDeMetrosCuadrados < 1800
   ) {
     costoMetroCuadradoPorMaquina = 6
-  } else if (!isBlanca && totalDeMetrosCuadrados >= 2000) {
+  } else if ((!isBlanca && !isFondeada) && totalDeMetrosCuadrados >= 1800) {
     costoMetroCuadradoPorMaquina = 4
   } else if (
-    isBlanca &&
-    totalDeMetrosCuadrados >= 200 &&
+    (isBlanca || isFondeada) &&
     totalDeMetrosCuadrados < 800
   ) {
     costoMetroCuadradoPorMaquina = 4
   } else if (
-    isBlanca &&
+    (isBlanca || isFondeada) &&
     totalDeMetrosCuadrados >= 800 &&
-    totalDeMetrosCuadrados < 2000
+    totalDeMetrosCuadrados < 1800
   ) {
     costoMetroCuadradoPorMaquina = 2.5
-  } else if (isBlanca && totalDeMetrosCuadrados >= 2000) {
+  } else if ((isBlanca || isFondeada) && totalDeMetrosCuadrados >= 1800) {
     costoMetroCuadradoPorMaquina = 1
   }
 
@@ -238,20 +234,21 @@ const useData = ({
 
   // console.log(precioDeVenta)
 
-  // const utMillar = precioVenta - (costoFijoPorMil + precio)
+  const utilidadPorMillar = precioDeVenta - costoFinal
 
-  // const utPedido = utMillar * (totalEtiquetas / 1000)
+  const utilidadDelPedido = utilidadPorMillar * totalMillares
 
   // const utHoras = utPedido / tiempoHoras
 
   // const ventaTotal = precioVenta * (totalEtiquetas / 1000)
 
-  // const comision = utPedido * 0.2
+  const comision = utilidadDelPedido * 0.13
 
   return {
     precioDeVenta,
     totalDeMetrosCuadrados,
     utilidadSugerida,
+    comision
   }
 }
 
