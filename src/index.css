@@ -149,6 +149,12 @@ h1 {
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 }
 
+@media screen and (max-width: 900px) {
+  .mobile-color {
+    color: black;
+  }
+}
+
 @media screen and (min-width: 992px) {
   .section-center {
     width: 70vw;
