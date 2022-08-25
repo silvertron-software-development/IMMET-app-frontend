@@ -80,7 +80,7 @@ const PricingForm = () => {
   return (
     <Wrapper className='section is-medium content'>
       <form className='pricing-form'>
-      <FormRowSelect
+        <FormRowSelect
           labelText='Etiqueta Nueva o Reimpresión'
           name='etiquetaNueva'
           id='etiquetaNueva'
@@ -100,7 +100,7 @@ const PricingForm = () => {
             />
           </div>
         )}
-        
+
         {values.etiquetaNueva === '1' && (
           <>
             {suajeDisplay && (
@@ -153,8 +153,7 @@ const PricingForm = () => {
           list={acabados}
           value={values.acabado}
         />
-        
-        
+
         <FormRowSelect
           labelText='Número de Tintas'
           name='numeroTintas'
@@ -163,8 +162,6 @@ const PricingForm = () => {
           list={tintas}
           value={values.numeroTintas}
         />
-
-        
 
         <FormRow
           labelText='Medida al Eje'
@@ -184,7 +181,7 @@ const PricingForm = () => {
           value={values.medidaDesarrollo}
           handleChange={handleChange}
         />
-        
+
         <FormRow
           labelText='Total de etiquetas individuales'
           type='text'
@@ -232,8 +229,12 @@ const PricingForm = () => {
           >
             Generar Cotización
           </button>
-          <span className='has-text-weight-bold is-size-3'>Precio de venta:</span> <span>{precioDeVenta}</span>
-          <span className='has-text-weight-bold is-size-3'>Comisión:</span><span>{comision}</span>
+          <span className='has-text-weight-bold is-size-3'>
+            Precio de venta:
+          </span>{' '}
+          <span>{precioDeVenta}</span>
+          <span className='has-text-weight-bold is-size-3'>Comisión:</span>
+          <span>{comision}</span>
         </div>
       </form>
       {totalDeMetrosCuadrados < 200 && values.totalEtiquetas && (

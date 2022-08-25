@@ -15,9 +15,13 @@ export const postNewPricing = createAsyncThunk(
     console.log(cotizaciones)
     try {
       console.log(cotizaciones)
-      const { data } = await axios.post(process.env.BACKEND, cotizaciones, {
-        responseType: 'blob',
-      })
+      const { data } = await axios.post(
+        process.env.REACT_APP_BACKEND,
+        cotizaciones,
+        {
+          responseType: 'blob',
+        }
+      )
       const file = new Blob([data], {
         type: 'application/pdf',
       })
